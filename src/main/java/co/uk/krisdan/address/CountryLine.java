@@ -1,6 +1,6 @@
 package co.uk.krisdan.address;
 
-import co.uk.krisdan.address.exceptions.AddressLineTooLongException;
+import co.uk.krisdan.address.exceptions.AddressLineInvalidException;
 
 public class CountryLine implements AddressLine {
 	
@@ -8,7 +8,7 @@ public class CountryLine implements AddressLine {
 	
 	String country;
 
-	public CountryLine(String country) throws AddressLineTooLongException {
+	public CountryLine(String country) throws AddressLineInvalidException {
 		
 		this.setCountry(country);
 	}
@@ -20,14 +20,14 @@ public class CountryLine implements AddressLine {
 	}
 
 
-	private void setCountry(String country) throws AddressLineTooLongException {
+	private void setCountry(String country) throws AddressLineInvalidException {
 		
 		boolean valid = this.validate(country);
 		
 		if(valid) {
 			this.country = country;
 		} else {
-			throw new AddressLineTooLongException("CountryLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
+			throw new AddressLineInvalidException("CountryLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
 		}
 	}
 

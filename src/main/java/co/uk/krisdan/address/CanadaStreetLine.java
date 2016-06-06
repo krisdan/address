@@ -3,7 +3,7 @@
  */
 package co.uk.krisdan.address;
 
-import co.uk.krisdan.address.exceptions.AddressLineTooLongException;
+import co.uk.krisdan.address.exceptions.AddressLineInvalidException;
 
 /**
  * @author Chris Perkins - chris.krisdan@gmail.com
@@ -16,19 +16,19 @@ public class CanadaStreetLine extends StreetLine {
 	/**
 	 * 
 	 */
-	public CanadaStreetLine(String street) throws AddressLineTooLongException {
+	public CanadaStreetLine(String street) throws AddressLineInvalidException {
 		
 		this.setProperty(street);
 	}
 	
-	private void setProperty(String street) throws AddressLineTooLongException {
+	private void setProperty(String street) throws AddressLineInvalidException {
 		
 		boolean valid = this.validate(street);
 		
 		if(valid) {
 			this.street = street;
 		} else {
-			throw new AddressLineTooLongException("StreetLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
+			throw new AddressLineInvalidException("StreetLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
 		}
 	}
 

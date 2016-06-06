@@ -1,24 +1,24 @@
 package co.uk.krisdan.address;
 
-import co.uk.krisdan.address.exceptions.AddressLineTooLongException;
+import co.uk.krisdan.address.exceptions.AddressLineInvalidException;
 
 public class UkLocalityLine extends LocalityLine {
 	
 	private static final int MAX_LENGTH = 150;
 
-	public UkLocalityLine() throws AddressLineTooLongException {
+	public UkLocalityLine() throws AddressLineInvalidException {
 		
 		this.setLocality(locality);
 	}
 	
-	private void setLocality(String locality) throws AddressLineTooLongException {
+	private void setLocality(String locality) throws AddressLineInvalidException {
 		
 		boolean valid = this.validate(locality);
 		
 		if(valid) {
 			this.locality = locality;
 		} else {
-			throw new AddressLineTooLongException("LocalityLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
+			throw new AddressLineInvalidException("LocalityLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
 		}
 	}
 

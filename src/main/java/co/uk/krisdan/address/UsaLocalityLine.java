@@ -3,7 +3,7 @@
  */
 package co.uk.krisdan.address;
 
-import co.uk.krisdan.address.exceptions.AddressLineTooLongException;
+import co.uk.krisdan.address.exceptions.AddressLineInvalidException;
 
 /**
  * @author Chris Perkins - chris.krisdan@gmail.com
@@ -16,19 +16,19 @@ public class UsaLocalityLine extends LocalityLine {
 	/**
 	 * 
 	 */
-	public UsaLocalityLine() throws AddressLineTooLongException {
+	public UsaLocalityLine() throws AddressLineInvalidException {
 		
 		this.setCity(locality);
 	}
 	
-	private void setCity(String locality) throws AddressLineTooLongException {
+	private void setCity(String locality) throws AddressLineInvalidException {
 		
 		boolean valid = this.validate(locality);
 		
 		if(valid) {
 			this.locality = locality;
 		} else {
-			throw new AddressLineTooLongException("LocalityLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
+			throw new AddressLineInvalidException("LocalityLine Too Long Error: ", this.getLineType(), "" + MAX_LENGTH);
 		}
 	}
 
