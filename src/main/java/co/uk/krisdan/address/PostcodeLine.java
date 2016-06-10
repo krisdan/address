@@ -13,6 +13,11 @@ public abstract class PostcodeLine implements AddressLine {
 	
 	protected PostCode postcode;
 
+	/**
+	 * Returns the PostCode Object Wrapped by a PostcodeLine Object.
+	 * 
+	 * @return PostCode
+	 */
 	protected PostCode getPostcode() {
 		
 		return this.postcode;
