@@ -3,12 +3,16 @@
  */
 package co.uk.krisdan.address;
 
-import co.uk.krisdan.address.exceptions.AddressLineInvalidException;
 import co.uk.krisdan.postcode.PostCode;
-import co.uk.krisdan.postcode.exceptions.CaAlphaNumericPostCodeException;
-import co.uk.krisdan.postcode.exceptions.CaTooLongPostCodeException;
-import co.uk.krisdan.postcode.exceptions.CaTooShortPostCodeException;
-import co.uk.krisdan.postcode.exceptions.CaUnusedPostCodeException;
+import co.uk.krisdan.postcode.PostCodeAPI;
+import co.uk.krisdan.postcode.PostCodeAPIInterface;
+import co.uk.krisdan.postcode.exceptions.FrNumericPostCodeException;
+import co.uk.krisdan.postcode.exceptions.FrTooHighPostCodeException;
+import co.uk.krisdan.postcode.exceptions.FrTooLongPostCodeException;
+import co.uk.krisdan.postcode.exceptions.FrTooLowPostCodeException;
+import co.uk.krisdan.postcode.exceptions.FrTooShortPostCodeException;
+import co.uk.krisdan.postcode.exceptions.FrUnusedPostCodeException;
+import co.uk.krisdan.postcode.validators.FrenchPostCodeValidator;
 
 /**
  * @author Chris Perkins - chris.krisdan@gmail.com
@@ -16,14 +20,56 @@ import co.uk.krisdan.postcode.exceptions.CaUnusedPostCodeException;
  */
 public class FrancePostCodeLine extends PostcodeLine {
 
+
 	/**
+	 * Receives a PostCode Object and initialises a FrancePostCodeLine Object.
 	 * 
+	 * @param postcode
+	 * 
+	 * @throws FrNumericPostCodeException
+	 * @throws FrTooLongPostCodeException
+	 * @throws FrTooShortPostCodeException
+	 * @throws FrUnusedPostCodeException
+	 * @throws FrTooHighPostCodeException
+	 * @throws FrTooLowPostCodeException
 	 */
-	public FrancePostCodeLine() {
-		// TODO Auto-generated constructor stub
+	public FrancePostCodeLine(PostCode postcode) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
+		
+		this.setProperty(postcode);
 	}
 	
-	private boolean setProperty(String postcode) {
+	/**
+	 * Receives a String and initialises a FrancePostCodeLine Object.
+	 * 
+	 * @param postcode
+	 * 
+	 * @throws FrNumericPostCodeException
+	 * @throws FrTooLongPostCodeException
+	 * @throws FrTooShortPostCodeException
+	 * @throws FrUnusedPostCodeException
+	 * @throws FrTooHighPostCodeException
+	 * @throws FrTooLowPostCodeException
+	 */
+	public FrancePostCodeLine(String postcode) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
+		
+		this.setProperty(postcode);
+	}
+	
+	/**
+	 * Receives a String and, if it conforms to the Canadian Postcode format, sets it as the value of the Object property postcode. Returns true if successful false otherwise.
+	 * 
+	 * @param postcode
+	 * 
+	 * @return boolean
+	 * 
+	 * @throws FrNumericPostCodeException
+	 * @throws FrTooLongPostCodeException
+	 * @throws FrTooShortPostCodeException
+	 * @throws FrUnusedPostCodeException
+	 * @throws FrTooHighPostCodeException
+	 * @throws FrTooLowPostCodeException
+	 */
+	private boolean setProperty(String postcode) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
 		
 		boolean success = false;
 		
@@ -33,17 +79,29 @@ public class FrancePostCodeLine extends PostcodeLine {
 		
 		if(valid) {
 			
-			postCodeObj = this.createCandianPostcode(postcode);
+			postCodeObj = this.createFrenchPostcode(postcode);
 			
-			this.postcode = postCodeObj;
-			
-			success = (this.getPostcode().equals(postCodeObj));
+			success = this.setProperty(postCodeObj);
 		}
 		
 		return success;
 	}
 	
-	private boolean setProperty(PostCode postcode) {
+	/**
+	 * Receives a PostCode Object and sets it as the value of the Object property postcode. Returns true if successful false otherwise.
+	 * 
+	 * @param postcode
+	 * 
+	 * @return boolean
+	 * 
+	 * @throws FrNumericPostCodeException
+	 * @throws FrTooLongPostCodeException
+	 * @throws FrTooShortPostCodeException
+	 * @throws FrUnusedPostCodeException
+	 * @throws FrTooHighPostCodeException
+	 * @throws FrTooLowPostCodeException
+	 */
+	private boolean setProperty(PostCode postcode) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
 		
 		boolean success = false;
 		
@@ -52,9 +110,36 @@ public class FrancePostCodeLine extends PostcodeLine {
 		if(valid) {
 			
 			this.postcode = postcode;
+			
+			success = (this.getPostcode().equals(postcode));
 		}
 		
-		return success;		
+		return success;	
+	}
+	
+	/**
+	 * Receives a String and if it is a valid French Post code returns a PostCode Object otherwise it returns null. 
+	 * 
+	 * @param code
+	 * 
+	 * @return PostCode / null
+	 * 
+	 * @throws FrNumericPostCodeException
+	 * @throws FrTooLongPostCodeException
+	 * @throws FrTooShortPostCodeException
+	 * @throws FrUnusedPostCodeException
+	 * @throws FrTooHighPostCodeException
+	 * @throws FrTooLowPostCodeException
+	 */
+	private PostCode createFrenchPostcode(String code) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
+		
+		PostCode postcode = null;
+		
+		PostCodeAPI api = PostCodeAPIInterface.getPostCodeAPI();
+		
+		postcode = api.getFrenchPostCodeObject(code);
+		
+		return postcode;
 	}
 
 	/* (non-Javadoc)
@@ -62,17 +147,38 @@ public class FrancePostCodeLine extends PostcodeLine {
 	 */
 	@Override
 	public String getCountry() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return "France";
+	}
+	
+	/**
+	 * Receives a String and returns true if it is a valid French Post code. False if it is not valid.
+	 * 
+	 * @param line
+	 * 
+	 * @return boolean
+	 * 
+	 * @throws FrNumericPostCodeException
+	 * @throws FrTooLongPostCodeException
+	 * @throws FrTooShortPostCodeException
+	 * @throws FrUnusedPostCodeException
+	 * @throws FrTooHighPostCodeException
+	 * @throws FrTooLowPostCodeException
+	 */
+	public boolean validate(String line) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
+		
+		return FrenchPostCodeValidator.validate(line);
 	}
 
 	/* (non-Javadoc)
 	 * @see co.uk.krisdan.address.AddressLine#validate(java.lang.Object)
 	 */
 	@Override
-	public boolean validate(Object line) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean validate(Object line) throws FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException {
+		
+		PostCode postCode = (PostCode) line;
+		
+		return this.validate(postCode.getAsString());
 	}
 
 }
