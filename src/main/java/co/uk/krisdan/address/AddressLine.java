@@ -10,6 +10,17 @@ import co.uk.krisdan.postcode.exceptions.FrTooLongPostCodeException;
 import co.uk.krisdan.postcode.exceptions.FrTooLowPostCodeException;
 import co.uk.krisdan.postcode.exceptions.FrTooShortPostCodeException;
 import co.uk.krisdan.postcode.exceptions.FrUnusedPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UkAlphaNumericPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UkTooLongPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UkTooShortPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UkUnusedPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaForbidenCharactersPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaNumericPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaTooHighPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaTooLongPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaTooLowPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaTooShortPostCodeException;
+import co.uk.krisdan.postcode.exceptions.UsaUnusedPostCodeException;
 
 public interface AddressLine {
 	
@@ -43,7 +54,18 @@ public interface AddressLine {
 	 * @throws FrTooShortPostCodeException 
 	 * @throws FrTooLongPostCodeException 
 	 * @throws FrNumericPostCodeException 
+	 * @throws UkTooShortPostCodeException 
+	 * @throws UkTooLongPostCodeException 
+	 * @throws UkUnusedPostCodeException 
+	 * @throws UkAlphaNumericPostCodeException 
+	 * @throws UsaTooLowPostCodeException 
+	 * @throws UsaTooHighPostCodeException 
+	 * @throws UsaUnusedPostCodeException 
+	 * @throws UsaTooShortPostCodeException 
+	 * @throws UsaTooLongPostCodeException 
+	 * @throws UsaForbidenCharactersPostCodeException 
+	 * @throws UsaNumericPostCodeException 
 	 */
-	public boolean validate(Object line) throws CaAlphaNumericPostCodeException, CaUnusedPostCodeException, CaTooLongPostCodeException, CaTooShortPostCodeException, FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException;
+	public boolean validate(Object line) throws CaAlphaNumericPostCodeException, CaUnusedPostCodeException, CaTooLongPostCodeException, CaTooShortPostCodeException, FrNumericPostCodeException, FrTooLongPostCodeException, FrTooShortPostCodeException, FrUnusedPostCodeException, FrTooHighPostCodeException, FrTooLowPostCodeException, UkAlphaNumericPostCodeException, UkUnusedPostCodeException, UkTooLongPostCodeException, UkTooShortPostCodeException, UsaNumericPostCodeException, UsaForbidenCharactersPostCodeException, UsaTooLongPostCodeException, UsaTooShortPostCodeException, UsaUnusedPostCodeException, UsaTooHighPostCodeException, UsaTooLowPostCodeException;
 
 }
